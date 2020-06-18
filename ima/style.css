@@ -1,0 +1,42 @@
+#mainContainerads {
+  position: relative;
+  width: 640px;
+  height: 360px;
+}
+
+#mainContainerads #content, #mainContainerads #adContainer {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 640px;
+  height: 360px;
+}
+
+#mainContainerads #contentElement {
+  width: 640px;
+  height: 360px;
+  overflow: hidden;
+}
+
+#mainContainerads #playButton {
+	display: none;
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  height: 40px;
+  width: 100px;
+  border-style: none;
+  font-weight: bold;
+  font-size: 25px;
+  opacity: 0.5;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px transparent solid;
+  color: #000;
+  cursor: pointer;
+  line-height: 0;
+}
+#playButton:hover {
+  border: 1px #f00 solid;
+  color: #f00;
+}
