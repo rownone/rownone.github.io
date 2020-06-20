@@ -23,8 +23,8 @@
   position: absolute;
   left: 20px;
   bottom: 20px;
-  height: 40px;
-  width: 100px;
+  height: 35px;
+  width: 65px;
   border-style: none;
   font-weight: bold;
   font-size: 25px;
@@ -36,7 +36,28 @@
   cursor: pointer;
   line-height: 0;
 }
-#playButton:hover {
+#mainContainerads #playButton:hover {
+  border: 1px #f00 solid;
+  color: #f00;
+}
+
+#mainContainerads #unmuteButton {
+  display: none;
+  position: absolute;
+  left: 90px;
+  bottom: 20px;
+  border-style: none;
+  font-weight: bold;
+  font-size: 25px;
+  opacity: 0.5;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 1px transparent solid;
+  color: #000;
+  cursor: pointer;
+  line-height: 0;
+}
+#mainContainerads #unmuteButton:hover {
   border: 1px #f00 solid;
   color: #f00;
 }
