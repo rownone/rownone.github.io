@@ -22,45 +22,70 @@ var autoplayAllowed;
 var autoplayRequiresMuted;
 var adsActive_ = false;
 var pause = false;
+var muted = true;
+var unmuteButton;
 
 function initDesktopAutoplayExample() {
-  videoContent = document.getElementById('contentElement');
-  playButton = document.getElementById('playButton');
-  playButton.addEventListener('click', () => {
-	  if(adsActive_){
-    // Initialize the container. Must be done via a user action where autoplay
-    // is not allowed.
-    adDisplayContainer.initialize();
-    adsInitialized = true;
-    videoContent.load();
-	  playAds();
-	  }else{
-		  if(pause){
-			  pause = false;
-			  playButton.textContent = 'II';
-			videoContent.play();
-		  }else{
-			  pause = true;
-			  playButton.textContent = String.fromCharCode(9654);
-			videoContent.pause();
-		  }
-	  }
-  });
-  setUpIMA();
-  // Check if autoplay is supported.
-  checkAutoplaySupport();
+	videoContent = document.getElementById('contentElement');
+	playButton = document.getElementById('playButton');
+	
+	unmuteButton = document.getElementById('unmuteButton');
+	playButton.addEventListener('click', () => {
+		if(adsActive_){
+			// Initialize the container. Must be done via a user action where autoplay
+			// is not allowed.
+			adDisplayContainer.initialize();
+			adsInitialized = true;
+			videoContent.load();
+			playAds();
+		}else{
+			if(pause){
+				pause = false;
+				playButton.textContent = 'II';
+				videoContent.play();
+			}else{
+				pause = true;
+				playButton.textContent = String.fromCharCode(9654);
+				videoContent.pause();
+			}
+		}
+	});
+	
+	unmuteButton.addEventListener('click', () => {
+		if(muted){
+			muted = false;
+			videoContent.volume = 1;
+			videoContent.muted = false;
+			//unmuteButton.textContent = 'mute';
+			
+			unmuteButton.src = '//s3.amazonaws.com/pix.iemoji.com/twit33/0657.png';
+		}else{
+			muted = true;
+			videoContent.volume = 0;
+			videoContent.muted = true;
+			//unmuteButton.textContent = 'unmute';
+			unmuteButton.src = '//s3.amazonaws.com/pix.iemoji.com/twit33/0659.png';
+		}
+	});
+	
+	setUpIMA();
+	// Check if autoplay is supported.
+	checkAutoplaySupport();
 }
 
 function checkAutoplaySupport() {
   // Test for autoplay support with our content player.
-
   var playPromise = videoContent.play();
   if (playPromise !== undefined) {
-    playPromise.then(onAutoplayWithSoundSuccess).catch(onAutoplayWithSoundFail);
+    //playPromise.then(onAutoplayWithSoundSuccess).catch(onAutoplayWithSoundFail);
+	playPromise.then(onAutoplayWithSoundFail).catch(onAutoplayWithSoundSuccess); //mute
   }
 }
 
 function onAutoplayWithSoundSuccess() {
+	muted = false;
+	//unmuteButton.textContent = 'mute';
+	unmuteButton.src = '//s3.amazonaws.com/pix.iemoji.com/twit33/0657.png';
   // If we make it here, unmuted autoplay works.
   videoContent.pause();
   autoplayAllowed = true;
@@ -69,6 +94,10 @@ function onAutoplayWithSoundSuccess() {
 }
 
 function onAutoplayWithSoundFail() {
+	muted = true;
+	//unmuteButton.textContent = 'unmute';
+	
+	unmuteButton.src = '//s3.amazonaws.com/pix.iemoji.com/twit33/0659.png';
   // Unmuted autoplay failed. Now try muted autoplay.
   checkMutedAutoplaySupport();
 }
@@ -214,6 +243,7 @@ function onAdsManagerLoaded(adsManagerLoadedEvent) {
     playAds();
   } else {
     playButton.style.display = 'block';
+	unmuteButton.style.display = 'block';
   }
 }
 
@@ -249,6 +279,7 @@ function onContentResumeRequested() {
 	console.log('ads done');
 	adsActive_ = false;
 	playButton.style.display = "block";
-  videoContent.play();
-  videoContent.onended = contentEndedListener;
+	unmuteButton.style.display = 'block';
+	videoContent.play();
+	videoContent.onended = contentEndedListener;
 }
