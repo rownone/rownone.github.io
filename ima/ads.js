@@ -77,15 +77,19 @@ function checkAutoplaySupport() {
   // Test for autoplay support with our content player.
   var playPromise = videoContent.play();
   if (playPromise !== undefined) {
-    //playPromise.then(onAutoplayWithSoundSuccess).catch(onAutoplayWithSoundFail);
-	playPromise.then(onAutoplayWithSoundFail).catch(onAutoplayWithSoundSuccess); //mute
+    playPromise.then(onAutoplayWithSoundSuccess).catch(onAutoplayWithSoundFail);
+	//playPromise.then(onAutoplayWithSoundFail).catch(onAutoplayWithSoundSuccess); //mute
   }
 }
 
 function onAutoplayWithSoundSuccess() {
-	muted = false;
+	videoContent.volume = 0;
+  videoContent.muted = true;
+	
+	muted = true;
 	//unmuteButton.textContent = 'mute';
-	unmuteButton.src = '//s3.amazonaws.com/pix.iemoji.com/twit33/0657.png';
+	//unmuteButton.src = '//s3.amazonaws.com/pix.iemoji.com/twit33/0657.png';
+	unmuteButton.src = '//s3.amazonaws.com/pix.iemoji.com/twit33/0659.png';
   // If we make it here, unmuted autoplay works.
   videoContent.pause();
   autoplayAllowed = true;
