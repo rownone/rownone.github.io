@@ -287,3 +287,7 @@ function onContentResumeRequested() {
 	videoContent.play();
 	videoContent.onended = contentEndedListener;
 }
+
+(function() {
+	initDesktopAutoplayExample();
+})();
